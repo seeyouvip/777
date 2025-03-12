@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Sunucynyň IP adresini awtomatiki almak
+server_ip=$(curl -s ifconfig.me)
+
+# Obfs4 konfigurasiýa faýlynyň ýoly
+obfs4_conf="/etc/obfs4/obfs4proxy.conf"
+
+# Täze IP-ni Obfs4 konfigurasiýa faýlyna täzeden ýazmak
+sed -i "s/^TARGET=.*/TARGET=$server_ip:8443/" $obfs4_conf
+
+# Obfs4 proxy-ni täzeden başlatmak
+systemctl restart obfs4proxy
+
+echo "Obfs4 konfigurasiýasy täzelendi: $server_ip:8443"
